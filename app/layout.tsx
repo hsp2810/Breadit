@@ -1,7 +1,9 @@
-import { Inter } from "next/font/google";
-import "../styles/globals.css";
-import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
+import { cn } from "@/lib/utils";
+import { Inter } from "next/font/google";
+import Providers from "@/components/Providers";
+
+import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,26 +16,27 @@ export const metadata = {
 export default function RootLayout({
   children,
   authModal,
-}: Readonly<{
+}: {
   children: React.ReactNode;
   authModal: React.ReactNode;
-}>) {
+}) {
   return (
     <html
       lang='en'
-      className={
-        (cn("bg-white text-slate-900 antialiased light"), inter.className)
-      }
+      className={cn(
+        "bg-white text-slate-900 antialiased light",
+        inter.className
+      )}
     >
-      <body className='min-h-screen pt-12 bg-slate-50 antialiased'>
-        <Navbar />
+      <body className='min-h-screen bg-slate-50 antialiased'>
+        <Providers>
+          <Navbar />
+          {authModal}
 
-        {authModal}
-
-        <div className='container max-w-7xl mx-auto h-full pt-12'>
-          {children}
-        </div>
-
+          <div className='container max-w-7xl mx-auto h-full pt-24'>
+            {children}
+          </div>
+        </Providers>
         <Toaster />
       </body>
     </html>
